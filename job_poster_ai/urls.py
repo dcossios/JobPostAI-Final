@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from posters import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('posters.urls'))
+    path('', include('posters.urls')),
+    path('instagram_webhook/', views.instagram_webhook, name='instagram_webhook'),  # Ruta del webhook
 ]
 
 if settings.DEBUG:

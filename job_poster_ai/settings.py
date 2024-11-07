@@ -14,6 +14,12 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
+
+# varibles de entorne Ig
+APP_ID = os.getenv("APP_ID")
+APP_SECRET = os.getenv("APP_SECRET")
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +32,7 @@ SECRET_KEY = 'django-insecure-&!#i#w7m9q0=3dlrq24*fxv48q9il0io8bi2hpkrj!7$ith*&m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['jdsierrao.pythonanywhere.com']
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', 'tu_clave_API_aquí')
 
@@ -131,3 +137,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+WEBHOOK_VERIFICATION_TOKEN = 'mi_verificacion_webhook'
+

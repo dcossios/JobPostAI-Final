@@ -14,13 +14,15 @@ urlpatterns = [
         name='confirmacion'
     ),
     path('image-selection/', views.image_selection, name='image_selection'),
-    path('crear-poster/', views.crear_poster, name='crear_poster'),  
+    path('crear-poster/', views.crear_poster, name='crear_poster'),
     path('guardar-y-mostrar-post/', views.guardar_y_mostrar_post, name='guardar_y_mostrar_post'),
     path('ver-post-instagram/', views.ver_post_instagram, name='ver_post_instagram'),
     path('publicar_poster_instagram/', views.publicar_poster_instagram, name='publicar_poster_instagram'),
     path('login/', login_view, name='login'),
-    path('register/', register_view, name='register'),  
+    path('register/', register_view, name='register'),
     path('download_ai/<path:poster_url>/', views.download_ai, name='download_ai'),
+    path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
+    path('instagram_redirect/', views.instagram_redirect, name='instagram_redirect'),
 
 ]
 if settings.DEBUG:

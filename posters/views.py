@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import requests
 from django.conf import settings
 from django.urls import reverse
@@ -17,6 +17,45 @@ from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
+import json
+from django.views.decorators.csrf import csrf_exempt
+
+def instagram_redirect(request):
+    # Obtener el código de autorización que Instagram envía como parámetro
+    authorization_code = request.GET.get('code')
+
+    if authorization_code:
+        # Aquí puedes usar el código de autorización para solicitar el token de acceso de Instagram
+        # O hacer cualquier otra acción necesaria
+        return HttpResponse("Inicio de sesión exitoso, código de autorización recibido.")
+    else:
+        return HttpResponse("Error en el inicio de sesión o no se recibió código de autorización.")
+
+
+def privacy_policy(request):
+    return render(request, 'privacy_policy.html')
+
+@csrf_exempt
+def instagram_webhook(request):
+    # Verificación del token
+    if request.method == 'GET':
+        verify_token = request.GET.get('hub.verify_token')
+        challenge = request.GET.get('hub.challenge')
+
+        # Compara el token enviado por Meta con el configurado en settings.py
+        if verify_token == settings.WEBHOOK_VERIFICATION_TOKEN:
+            return HttpResponse(challenge)
+        else:
+            return HttpResponse('Error de verificación', status=403)
+
+    # Manejo de notificaciones del webhook
+    elif request.method == 'POST':
+        # Aquí puedes manejar los datos enviados en las notificaciones
+        data = json.loads(request.body.decode('utf-8'))
+        print("Datos recibidos en el webhook:", data)
+        return JsonResponse({"status": "recibido"})
+
+    return HttpResponse(status=405)
 
 def login_view(request):
     if request.method == 'POST':
@@ -97,7 +136,7 @@ def crear_poster(request):
     job_title = request.session.get('job_title', 'Título no disponible')
     job_description = request.session.get('job_description', 'Descripción no disponible')
     contact_info = "contacto@empresa.com"
-    
+
     # Información de contacto (esto puede ser dinámico también)
     contact_info = "contacto@empresa.com"
 
@@ -197,7 +236,7 @@ def extract_text_from_file(file):
             text = ''
             for page in range(len(reader.pages)):
                 text += reader.pages[page].extract_text()
-            
+
             return text.encode('utf-8').decode('utf-8')
 
         elif file.name.endswith('.docx'):
@@ -214,34 +253,25 @@ def extract_text_from_file(file):
 
 # Función para generar un resumen usando Gemini
 def get_summaryImage(request, text):
-    model = genai.GenerativeModel('gemini-1.5-flash')
     try:
-        
         text = text.encode('utf-8').decode('utf-8')
-
-        # Utiliza la nueva llamada de la API de Gemini para generar el resumen
-        response = model.generate_content(f'De que trabajo es la vacante que se menciona en el siguiente texto, solo menciona el nombre de el trabajo: {text}')
-    
-        summary = response.text  # O ajusta según la estructura del objeto
+        # Usa generate_text para obtener el resumen
+        response = genai.generate_text(prompt=f'De que trabajo es la vacante que se menciona en el siguiente texto, solo menciona el nombre del trabajo: {text}')
+        summary = response['text']  # Ajusta según la estructura del objeto de respuesta
         return summary
-
     except Exception as e:
         return f"Error al generar el resumen: {e}"
 
 def get_summaryDescription(text):
-    model = genai.GenerativeModel('gemini-1.5-flash')
     try:
-        
         text = text.encode('utf-8').decode('utf-8')
-
-        # Utiliza la nueva llamada de la API de Gemini para generar el resumen
-        response = model.generate_content(f'De el siguiente texto dame los siguientes datos: Salario, Requisitos principales: {text}')
-    
-        summary = response.text  # O ajusta según la estructura del objeto
+        # Usa generate_text para obtener el resumen
+        response = genai.generate_text(prompt=f'De el siguiente texto dame los siguientes datos: Salario, Requisitos principales: {text}')
+        summary = response['text']  # Ajusta según la estructura del objeto de respuesta
         return summary
-
     except Exception as e:
         return f"Error al generar el resumen: {e}"
+
 
 
 
@@ -252,7 +282,7 @@ def extraer_datos_empleo(request, job_context):
     requisitos_match = re.search(r'\*\*Requisitos principales:\*\*\n(.+)', job_context, re.DOTALL)
 
     # Si se encuentran coincidencias, asignamos los valores, de lo contrario usamos un valor predeterminado
-    
+
     salary = salary_match.group(1) if salary_match else "No especificado"
     requisitos = requisitos_match.group(1).strip() if requisitos_match else "No especificado"
 
@@ -348,7 +378,7 @@ def publicar_poster_instagram(request):
             return JsonResponse({"status": "error", "message": "Error al crear el contenedor"})
     else:
         return JsonResponse({"status": "error", "message": "Método no permitido"}, status=405)
-    
+
 
 def download_ai(request, poster_url):
     # Verifica si `poster_url` es válido
@@ -360,7 +390,7 @@ def download_ai(request, poster_url):
             %%Title: Poster
             %%Pages: 1
             %%EndComments
-            
+
             <html>
               <head>
                 <style>
@@ -382,7 +412,7 @@ def download_ai(request, poster_url):
             %%Title: Poster
             %%Pages: 1
             %%EndComments
-            
+
             <html>
               <head>
                 <style>
@@ -395,7 +425,7 @@ def download_ai(request, poster_url):
             </html>
             %%EOF
         """
-    
+
     # Crea la respuesta HTTP con el archivo AI
         response = HttpResponse(ai_content, content_type='application/postscript')
         response['Content-Disposition'] = 'attachment; filename="poster.ai"'
