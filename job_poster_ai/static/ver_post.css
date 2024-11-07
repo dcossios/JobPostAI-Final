@@ -1,0 +1,323 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Estilos Generales */
+body {
+    background-color: #f8f9fa !important;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar-bg-body-tertiary {
+    z-index: 1;
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    padding-left: 10%;
+    padding-right: 10%;
+    position: sticky;
+}
+
+.container-fluid {
+    display: flex;
+    background-color: #e7e9ec;
+    color: #000000;
+    padding: 10px 20px;
+    margin: 20px auto;
+    border-radius: 100px;
+    width: 50%;
+    justify-content: space-between;
+    z-index: 2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-right: 20px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+/* Título Principal */
+.main-title {
+    text-align: center;
+    font-size: 32px;
+    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Contenedor Principal */
+.content-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 40px auto;
+    gap: 20px;
+}
+
+/* Columna Izquierda */
+.left-column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Selector de Redes Sociales */
+.selector .main {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.selector .up,
+.selector .down {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+}
+
+/* Estilos para los botones */
+.card1,
+.card2,
+.card3,
+.card4 {
+    width: 90px;
+    height: 90px;
+    outline: none;
+    border: none;
+    background: white;
+    border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.card1 .instagram {
+    fill: #cc39a4;
+}
+
+.card2 .facebook {
+    fill: #03A9F4;
+}
+
+.card3 .whatsapp {
+    fill: #25D366;
+}
+
+.card4 .gmail {
+    fill: #D44638;
+}
+
+.card1:hover {
+    background-color: #cc39a4;
+}
+
+.card1:hover .instagram {
+    fill: white;
+}
+
+.card2:hover {
+    background-color: #1877f2;
+}
+
+.card2:hover .facebook {
+    fill: white;
+}
+
+.card3:hover {
+    background-color: #25D366;
+}
+
+.card3:hover .whatsapp {
+    fill: white;
+}
+
+.card4:hover {
+    background-color: #D44638;
+}
+
+.card4:hover .gmail {
+    fill: white;
+}
+
+/* ... otros estilos existentes ... */
+
+/* Columna Derecha */
+.right-column {
+    flex: 2;
+    padding: 20px;
+    background-color: #f0f0f0; /* Fondo para distinguir el área */
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor de Previsualización */
+#preview-container {
+    width: 280px;
+    height: 500px;
+    border: 1px solid #dbdbdb;
+    border-radius: 20px; /* Para simular las esquinas redondeadas de un teléfono */
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos para simular un dispositivo móvil */
+#preview-container::before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 5px;
+    background-color: #ccc;
+    border-radius: 5px;
+    margin: 10px auto 0;
+}
+
+/* Estilos generales para las previsualizaciones */
+.preview-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Estilos para la previsualización de Instagram */
+.instagram-preview {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+.instagram-preview .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+}
+
+.instagram-preview .profile {
+    display: flex;
+    align-items: center;
+}
+
+.instagram-preview .profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.instagram-preview .image-container {
+    width: 100%;
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.instagram-preview .post-image {
+    width: 100%;
+    height: auto;
+}
+
+.instagram-preview .actions {
+    display: flex;
+    padding: 8px;
+    gap: 16px;
+}
+
+.instagram-preview .likes,
+.instagram-preview .description {
+    padding: 0 8px;
+}
+
+/* Estilos para la previsualización de Facebook */
+.facebook-preview {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+.facebook-preview .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+}
+
+.facebook-preview .profile {
+    display: flex;
+    align-items: center;
+}
+
+.facebook-preview .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.facebook-preview .profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.facebook-preview .image-container {
+    width: 100%;
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.facebook-preview .post-image {
+    width: 100%;
+    height: auto;
+}
+
+.facebook-preview .actions {
+    display: flex;
+    justify-content: space-around;
+    padding: 8px;
+}
+
+.facebook-preview .description {
+    padding: 8px;
+}
+
+.poster-dynamic-content {
+    width: 100%;  /* Ancho completo del contenedor */
+    max-width: 250px;  /* Ancho máximo del contenido dinámico */
+    max-height: 300px;  /* Altura máxima */
+    overflow: hidden;   /* Ocultar cualquier desbordamiento */
+    text-align: center;
+}
+
+/* Si hay imágenes dentro del contenido dinámico, asegúrate de que se ajusten */
+.poster-dynamic-content img {
+    width: 100%;        /* Asegura que la imagen use todo el ancho disponible */
+    height: auto;       /* Mantiene la proporción de la imagen */
+    max-height: 100%;   /* Limita la altura de la imagen dentro del contenedor */
+    object-fit: cover;  /* Ajusta la imagen para que no distorsione */
+    border-radius: 8px; /* Bordes redondeados opcionales */
+}
+
+.poster-dynamic-content {
+    transform: scale(0.9); /* Reduce al 90% del tamaño original */
+    transform-origin: top center; /* Mantiene la escala desde la parte superior */
+}
+
+
+
+/* Footer */
+footer {
+    width: 100%;
+    background-color: #1f41bb;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    font-size: 14px;
+}
